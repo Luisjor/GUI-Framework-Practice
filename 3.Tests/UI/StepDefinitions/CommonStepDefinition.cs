@@ -59,7 +59,7 @@ public class CommonSteps
         UIElementFactory.GetElement(elementName, CurrentView).Click();
     }
 
-    [When(@"(?:the user )?clicks on '([a-zA-Z ]+)' <([a-zA-Z ]+)>(?: at '([a-zA-Z ]+)')?$")]
+    [When(@"the user clicks on '(.*)' '(.*)' at '(.*)'")]
     public void Click(string elementName, string locatorArgument, string viewName)
     {
         if (viewName != null)
@@ -80,7 +80,7 @@ public class CommonSteps
 
         if (input == "Password Credential")
         {
-            UIElementFactory.GetElement(elementName, CurrentView).Type(ConfigModel.TODO_LY_PASS);
+            UIElementFactory.GetElement(elementName, CurrentView).Type(ConfigModel.WEB_PASS);
         }
         else
         {
@@ -104,23 +104,6 @@ public class CommonSteps
         UIElementFactory.GetElement(elementName, "Items Component").Type(Keys.Enter);
     }
 
-    [When(
-        @"(?:the user )?opens the Project Context Menu on <([a-zA-Z ]+)>(?: at '([a-zA-Z ]+)')?$"
-    )]
-    public void OpenContextMenu(string locatorArgument, string viewName)
-    {
-        if (viewName != null)
-        {
-            CurrentView = viewName;
-        }
-
-        _scenarioContext[ConfigModel.CurrentProject] = locatorArgument;
-
-        WebActions.HoverElement(
-            UIElementFactory.GetElement("Project Button", CurrentView, locatorArgument).WebElement
-        );
-        UIElementFactory.GetElement("Project Context Button", CurrentView, locatorArgument).Click();
-    }
 
     [When(@"the user drags and drop '([\w ]+)' '([\w ]+)' (above|on top of) '([\w ]+)'(?: at '([a-zA-Z ]+)')?$")]
     public void DragAndDrop(string locatorArgument1, string elementName, string placeToDrop, string locatorArgument2, string viewName)
@@ -147,14 +130,6 @@ public class CommonSteps
         WebActions.DragAndDrop(source, target, x, y);
     }
 
-    [When(@"(?:the user )?clicks on '([a-zA-Z ]+)' on the Project Context Menu")]
-    public void ProjectContextMenuAction(string locatorArgument)
-    {
-        locatorArgument = ProjectContextMenuHelper.ParseButtonName(locatorArgument);
-        UIElementFactory
-            .GetElement("Context Menu Buttons", "Project Component", locatorArgument)
-            .Click();
-    }
 
     [Then(@"the '(.*)' should (not )?be displayed(?: at '([a-zA-Z ]+)')?$")]
     public void ValidateDisplay(string elementName, string display, string viewName)
@@ -174,7 +149,7 @@ public class CommonSteps
         }
     }
 
-    [Then(@"the '(.*)' <(.*)> should (not )?be displayed(?: at '([a-zA-Z ]+)')?$")]
+    [Then(@"the '(.*)' ""(.*)"" should (not )?be displayed(?: at '([a-zA-Z ]+)')?$")]
     public void ValidateDisplay(
         string elementName,
         string locatorArgument,
@@ -225,25 +200,6 @@ public class CommonSteps
         );
     }
 
-    [When(
-        @"(?:the user )?clicks on [\x22']([\w ]+)[\x22'](?: <([\w ]+)>)?(?: on [\x22']([\w ]+)[\x22'])? option at [\x22']([\w ]+)[\x22']$"
-    )]
-    public void ClickContextOption(
-        string elementName,
-        string itemName,
-        string optionName,
-        string viewName
-    )
-    {
-        if (viewName != null)
-        {
-            CurrentView = viewName;
-        }
-
-        UIElementFactory.GetElement("Item Context Button", CurrentView, itemName).Click();
-        UIElementFactory.GetElement(elementName, CurrentView, optionName).Click();
-    }
-
     [Then(@"the main title text is ""(.*)""")]
     public void Thenthemaintitletextis(string expectedTitle)
     {
@@ -282,22 +238,6 @@ public class CommonSteps
         GenericWebDriver.AcceptAlert();
     }
 
-    [When(@"introduces his credentials")]
-    public void IntroduceCredentials()
-    {
-        _loginPage!.EmailTextField.Clear();
-        try
-        {
-            _loginPage.EmailTextField.Type(_scenarioContext.Get<string>("Email"));
-        }
-        catch
-        {
-            _loginPage.EmailTextField.Type(_loginPage.EmailCredentials);
-        }
-
-        _loginPage.PasswordTextField.Clear();
-        _loginPage.PasswordTextField.Type(_loginPage.PassCredentials);
-    }
 
     [Then(@"the '(.*)' value is updated with '(.*)' at '(.*)'")]
     public void VerifyElementValueUpdate(string elementName, string newValue, string viewName)
@@ -327,21 +267,5 @@ public class CommonSteps
                 .WebElement.GetAttribute("selected"),
             Is.EqualTo("true")
         );
-    }
-
-    [Then(@"the (project|item) '([\w ]+)' should appear before '([\w ]+)'")]
-    public void VerifyElementOrder(string elementType, string argument1, string argument2)
-    {
-        string[] names = new string[] { };
-        if (elementType == "project")
-        {
-            names = APIScripts.RetrieveProjectNames();
-        }
-        else if (elementType == "item")
-        {
-            names = APIScripts.RetrieveItemNames();
-        }
-
-        Assert.That(Array.IndexOf(names, argument1), Is.LessThan(Array.IndexOf(names, argument2)));
     }
 }

@@ -11,33 +11,28 @@ namespace Todoly.Views.WebAppPages;
 public class LoginPage
 {
     public readonly string HostUrl = ConfigModel.HostUrl;
-    public readonly string EmailCredentials = ConfigModel.TODO_LY_EMAIL;
-    public readonly string PassCredentials = ConfigModel.TODO_LY_PASS;
+    public readonly string EmailCredentials = ConfigModel.WEB_USERNAME;
+    public readonly string PassCredentials = ConfigModel.WEB_PASS;
 
-    [Element("Login", ElementType.Button)]
-    [Locator(LocatorType.ClassName, "HPHeaderLogin")]
-    public Button LoginButton => UIElementFactory.GetElement("Login", "Login Page");
+    [Element("Login Button", ElementType.Button)]
+    [Locator(LocatorType.Id, "login-button")]
+    public Button? LoginButton { get; }
 
     [Element("Email", ElementType.TextField)]
-    [Locator(LocatorType.Id, "ctl00_MainContent_LoginControl1_TextBoxEmail")]
-    public TextField EmailTextField => UIElementFactory.GetElement("Email", "Login Page");
+    [Locator(LocatorType.Id, "user-name")]
+    public TextField? EmailTextField { get; }
 
     [Element("Password", ElementType.TextField)]
-    [Locator(LocatorType.Id, "ctl00_MainContent_LoginControl1_TextBoxPassword")]
-    public TextField PasswordTextField => UIElementFactory.GetElement("Password", "Login Page");
-
-    [Element("Confirm Login", ElementType.Button)]
-    [Locator(LocatorType.Id, "ctl00_MainContent_LoginControl1_ButtonLogin")]
-    public Button ConfirmLoginButton => UIElementFactory.GetElement("Confirm Login", "Login Page");
+    [Locator(LocatorType.Id, "password")]
+    public TextField? PasswordTextField { get; }
 
     public LoginPage() { }
 
     public void LoginIntoApplication()
     {
         WebActions.NavigateTo(ConfigModel.HostUrl);
-        LoginButton.Click();
-        EmailTextField.Type(EmailCredentials);
-        PasswordTextField.Type(PassCredentials);
-        ConfirmLoginButton.Click();
+        UIElementFactory.GetElement("Email", "Login Page").Type(EmailCredentials);
+        UIElementFactory.GetElement("Password", "Login Page").Type(PassCredentials);
+        UIElementFactory.GetElement("Login Button", "Login Page").Click();
     }
 }

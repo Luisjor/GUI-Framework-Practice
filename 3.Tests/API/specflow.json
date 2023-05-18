@@ -1,6 +1,0 @@
-{
-  "livingDocGenerator": {
-    "enabled": true,
-    "filePath": "../../../ReportOutputs/TestExecution.json"
-  }
-}

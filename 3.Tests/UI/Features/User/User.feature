@@ -4,14 +4,15 @@ Feature: User
     @Smoke
     Scenario: Login into the site succesfully
         Given the user navigates to the URL
-        When the user clicks on 'Login' at 'Login Page'
-        And introduces his credentials
-        And clicks on 'Confirm Login'
-        Then the user should be able to see the 'Logout' button at 'Home Page'
+        When the user introduces his credentials
+            And clicks on 'Login Button' at 'Login Page'
+            And clicks on 'Burger Menu' at 'Home Page'
+        Then the 'Logout Button' should be displayed at 'Home Page'
 
     @Smoke
     Scenario: Logout off the site succesfully
         Given the user is logged in
-        When the user clicks on 'Logout' at 'Home Page'
-        Then the user should be logged out from the site
+        When the user clicks on 'Burger Menu' at 'Home Page'
+            And the user clicks on 'Logout Button' at 'Home Page'
+        Then the 'Login Button' should be displayed at 'Login Page'
 

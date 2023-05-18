@@ -3,7 +3,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Safari;
 using Todoly.Core.Helpers;
 
 namespace SeleniumTest.Core.Drivers;

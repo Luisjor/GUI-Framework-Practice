@@ -24,20 +24,10 @@ public class UserStepDefinitions : CommonSteps
         GenericWebDriver.Instance.Navigate().GoToUrl(ConfigModel.HostUrl);
     }
 
-    [Then(@"the user should be able to see the '(.*)' button at '(.*)'")]
-    public void ThenTheUserShouldBeAbleToSeeTheMainPage(string elementName, string viewName)
+    [When(@"the user introduces his credentials")]
+    public void IntroduceCredentials()
     {
-        Assert.True(UIElementFactory.GetElement(elementName, viewName).WebElement.Displayed);
-        Assert.That(GenericWebDriver.Instance.Title, Is.EqualTo("Todo.ly"));
-    }
-
-    [Then(@"the user should be logged out from the site")]
-    public void Thentheusershouldbeloggedoutfromthesite()
-    {
-        var currentUrl = GenericWebDriver.Instance.Url;
-        var currentTitle = GenericWebDriver.Instance.Title;
-
-        Assert.That(currentUrl, new EqualConstraint(ConfigModel.HostUrl));
-        Assert.That(currentTitle, new EqualConstraint("Todo.ly Simple Todo List"));
+        UIElementFactory.GetElement("Email", "Login Page").Type(ConfigModel.WEB_USERNAME);
+        UIElementFactory.GetElement("Password", "Login Page").Type(ConfigModel.WEB_PASS);
     }
 }

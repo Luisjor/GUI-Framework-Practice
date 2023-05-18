@@ -12,76 +12,21 @@ public class HomePage
 {
     public readonly string HostUrl = ConfigModel.HostUrl;
 
-    [Element("Loader Img", ElementType.Container)]
-    [Locator(LocatorType.Id, "LoaderImg")]
-    public IElement? LoaderImg { get; }
+    [Element("Burger Menu", ElementType.Button)]
+    [Locator(LocatorType.Id, "react-burger-menu-btn")]
+    public Button? BurgerMenu  { get; }
 
-    [Element("Logout", ElementType.Button)]
-    [Locator(LocatorType.Id, "ctl00_HeaderTopControl1_LinkButtonLogout")]
-    public Button LogoutButton =>
-        new Button("", new Locator(LocatorType.Id, "ctl00_HeaderTopControl1_LinkButtonLogout"));
+    [Element("Logout Button", ElementType.Button)]
+    [Locator(LocatorType.Id, "logout_sidebar_link")]
+    public Button? LogoutButton  { get; }
 
-    [Element("Settings", ElementType.Button)]
-    [Locator(
-        LocatorType.XPath,
-        "//div[@id='ctl00_HeaderTopControl1_PanelHeaderButtons']//a[text()='Settings']"
-    )]
-    public Button? SettingsButton { get; }
+    [Element("Item Card", ElementType.Button)]
+    [Locator(LocatorType.XPath, "//div[@class='inventory_item_name' and text()='{0}']")]
+    public Button? ItemCard  { get; }
 
-    [Element("Add New Project", ElementType.Button)]
-    [Locator(LocatorType.XPath, "//td[@class='ProjItemContent' and text()='Add New Project']")]
-    public Button AddNewProjectButton =>
-        new Button(
-            "",
-            new Locator(
-                LocatorType.XPath,
-                "//td[@class='ProjItemContent' and text()='Add New Project']"
-            )
-        );
+    [Element("Large Item Card", ElementType.Button)]
+    [Locator(LocatorType.XPath, "//div[contains(@class, 'large_size')  and text()='{0}']")]
+    public Button? LargeItemCard  { get; }
 
-    [Element("New Project Name", ElementType.TextField)]
-    [Locator(LocatorType.Id, "NewProjNameInput")]
-    public TextField AddNewProjectInput =>
-        new TextField("", new Locator(LocatorType.Id, "NewProjNameInput"));
 
-    [Element("Add New Project Name", ElementType.Button)]
-    [Locator(LocatorType.Id, "NewProjNameButton")]
-    public Button AddNewProjectNameButton =>
-        new Button("", new Locator(LocatorType.Id, "NewProjNameButton"));
-
-    [Element("Current Project Title", ElementType.Button)]
-    [Locator(LocatorType.Id, "CurrentProjectTitle")]
-    public Button ProjectTitleDiv =>
-        new Button("", new Locator(LocatorType.Id, "CurrentProjectTitle"));
-
-    [Element("Add New Item", ElementType.Button)]
-    [Locator(LocatorType.Id, "NewItemAddButton")]
-    public Button NewItemAddButton =>
-        new Button("", new Locator(LocatorType.Id, "NewItemAddButton"));
-
-    [Element("Recycle Bin Div", ElementType.Button)]
-    [Locator(LocatorType.Id, "ItemId_-3")]
-    public Button RecycleBinDiv => new Button("", new Locator(LocatorType.Id, "ItemId_-3"));
-
-    [Element("Recycle Bin Dropdown", ElementType.Button)]
-    [Locator(LocatorType.XPath, "//div[@itemid='-3']/img")]
-    public Button RecycleBinContextButton =>
-        new Button("", new Locator(LocatorType.XPath, "//div[@itemid='-3']/img"));
-
-    [Element("Empty Recycle Bin", ElementType.Button)]
-    [Locator(LocatorType.XPath, "//ul[@id='recycleContextMenu']/li/a")]
-    public Button RecycleBinEmptyButton =>
-        new Button("", new Locator(LocatorType.XPath, "//ul[@id='recycleContextMenu']/li/a"));
-
-    [Element("No Items", ElementType.Button)]
-    [Locator(LocatorType.ClassName, "NoItems")]
-    public Button? NoItemsDiv { get; }
-
-    [Element("Information Message", ElementType.Button)]
-    [Locator(LocatorType.Id, "InfoMessageText")]
-    public Button InfoMessageText => new Button("", new Locator(LocatorType.Id, "InfoMessageText"));
-
-    [Element("Section Name", ElementType.Button)]
-    [Locator(LocatorType.XPath, "//td[@class='FilterItemContent' and text()='{0}']")]
-    public Button? SectionName { get; }
 }
